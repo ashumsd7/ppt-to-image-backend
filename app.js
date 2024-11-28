@@ -78,40 +78,6 @@ const pptxToPdf = async (pptxPath, pptxFileName) => {
   }
 };
 
-// Function to upload file to Azure Blob Storage
-// async function uploadFileToBlob(filePath, fileName) {
-//   try {
-//     const sasToken =
-//       "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-06-04T13:26:22Z&st=2024-11-05T05:26:22Z&spr=https,http&sig=pAcLQDyT%2BRNtUABOSobtIhb%2FuSA43rbiU0btYf%2FVttw%3D";
-//     const containerName = `cmpptgencontainerv1`;
-//     const storageAccountName = "codemonkpptgen";
-
-//     // Create a BlobServiceClient
-//     const blobServiceClient = new BlobServiceClient(
-//       `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`
-//     );
-
-//     // Get a container client
-//     const containerClient = blobServiceClient.getContainerClient(containerName);
-
-//     // Create a block blob client for the file
-//     const blockBlobClient = containerClient.getBlockBlobClient(fileName);
-
-//     // Read the file as a buffer
-//     const fileBuffer = fs.readFileSync(filePath);
-
-//     // Upload the Blob
-//     await blockBlobClient.upload(fileBuffer, fileBuffer.length);
-
-//     // Generate the file URL
-//     const fileUrl = `https://${storageAccountName}.blob.core.windows.net/${containerName}/${fileName}`;
-//     console.log("File uploaded successfully! File URL:", fileUrl);
-//     return fileUrl;
-//   } catch (error) {
-//     console.error("Error uploading file:", error);
-//     throw error;
-//   }
-// }
 
 // Express endpoint to handle PPTX URL conversion
 app.post("/convert-pptx", async (req, res) => {
