@@ -10,7 +10,7 @@ import { promises as fs2 } from "node:fs";
 import { pdf } from "pdf-to-img";
 // Initialize Express app
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Handle __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -24,19 +24,25 @@ app.use(express.json());
 
 // Function to download PPTX file from URL
 async function downloadPPT(url, outputPath) {
-  const writer = fs.createWriteStream(outputPath);
-  const response = await axios({
-    url: url,
-    method: "GET",
-    responseType: "stream",
-  });
+  try {
+    const writer = fs.createWriteStream(outputPath);
+    const response = await axios({
+      url: url,
+      method: "GET",
+      responseType: "stream",
+      timeout: 30000 // Add 30 second timeout
+    });
 
-  response.data.pipe(writer);
+    response.data.pipe(writer);
 
-  return new Promise((resolve, reject) => {
-    writer.on("finish", resolve);
-    writer.on("error", reject);
-  });
+    return new Promise((resolve, reject) => {
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
+  } catch (error) {
+    console.error("Error downloading PPT:", error);
+    throw error;
+  }
 }
 
 // Function to convert PPTX to PDF
